@@ -104,6 +104,9 @@
         <label for="userKey">User Key:</label>
         <input type="text" id="userKey" name="userKey" required>
         <br><br>
+        <br><br>
+        <label for="endPointOrquest">Orquest link:</label>
+        <input type="text" id="endPointOrquest" name="endPointOrquest" required>
         <button type="submit">Send</button>
     </form>
     <table id="tablaDatos">
@@ -134,12 +137,13 @@
             const botName = document.getElementById('botName').value;
             const clientId = document.getElementById('clientId').value;
             const userKey = document.getElementById('userKey').value;
-            
-            showExecutions(executionKey,botName,clientId,userKey)
+            const endPointOrquest = document.getElementById('endPointOrquest').value;
+
+            showExecutions(executionKey, botName, clientId, userKey, endPointOrquest)
         });
 
-        async function showExecutions(executionKey,botName,clientId,userKey) {
-            const executions = await getExecutionsFormated(executionKey,botName,clientId,userKey);
+        async function showExecutions(executionKey, botName, clientId, userKey) {
+            const executions = await getExecutionsFormated(executionKey, botName, clientId, userKey);
             const table = document.getElementById('tablaDatos');
             const tbody = table.querySelector('tbody');
 

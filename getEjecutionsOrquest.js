@@ -1,4 +1,4 @@
-async function getToken(clientId,userKey) {
+async function getToken(clientId, userKey) {
     const credentials = {
         grant_type: "refresh_token",
         client_id: clientId,
@@ -17,10 +17,11 @@ async function getToken(clientId,userKey) {
     return responseData.access_token;
 };
 
-async function getExecutions(botName,clientId,userKey) {
+async function getExecutions(botName, clientId, userKey, endPointOrquest) {
     const body = {
         botName: botName,
-        token : await getToken(clientId,userKey)
+        token: await getToken(clientId, userKey),
+        endPointOrquest: endPointOrquest
     }
     const options = {
         method: 'POST',
@@ -53,28 +54,28 @@ function calculateTimeDifference(startDate, endDate) {
     startDate = new Date(startDate);
     endDate = new Date(endDate);
     const diffInMs = endDate - startDate;
-  
+
     //seconds
     const diffInSeconds = Math.floor(diffInMs / 1000);
     const seconds = diffInSeconds % 60;
-  
+
     //minutes
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     const minutes = diffInMinutes % 60;
-  
+
     //hours
     const hours = Math.floor(diffInMinutes / 60);
-  
+
     //format
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
     const formattedSeconds = String(seconds).padStart(2, '0');
-  
-    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-  }
 
-async function getExecutionsFormated(executionKey,botName,clientId,userKey) {
-    let executions = await getExecutions(botName,clientId,userKey);
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
+async function getExecutionsFormated(executionKey, botName, clientId, userKey, endPointOrquest) {
+    let executions = await getExecutions(botName, clientId, userKey, endPointOrquest);
     executions = executions.value;
     //console.log(executions);
     let executionFormated = []
