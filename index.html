@@ -92,21 +92,23 @@
 
 <body>
     <form id="executionForm">
+        <label for="endPointOrquest">Orquest link:</label>
+        <input type="text" id="endPointOrquest" name="endPointOrquest"
+            placeholder="https://cloud.uipath.com/[Organization]/[currectTenant]/orchestrator_" required>
+        <br><br>
         <label for="executionKey">Execution key:</label>
         <input type="text" id="executionKey" name="executionKey" required>
         <br><br>
         <label for="botName">Bot name (Optional):</label>
         <input type="text" id="botName" name="botName">
         <br><br>
-        <label for="clientId">Client ID:</label>
-        <input type="text" id="clientId" name="clientId" required>
         <br><br>
         <label for="userKey">User Key:</label>
         <input type="text" id="userKey" name="userKey" required>
         <br><br>
+        <label for="clientId">Client ID:</label>
+        <input type="text" id="clientId" name="clientId" required>
         <br><br>
-        <label for="endPointOrquest">Orquest link:</label>
-        <input type="text" id="endPointOrquest" name="endPointOrquest" placeholder="https://cloud.uipath.com/[Organization]/[currectTenant]/orchestrator_" required>
         <button type="submit">Send</button>
     </form>
     <table id="tablaDatos">
@@ -143,9 +145,10 @@
         });
 
         async function showExecutions(executionKey, botName, clientId, userKey, endPointOrquest) {
-            const executions = await getExecutionsFormated(executionKey, botName, clientId, userKey);
+            const executions = await getExecutionsFormated(executionKey, botName, clientId, userKey, endPointOrquest);
             const table = document.getElementById('tablaDatos');
             const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
 
             executions.forEach(execution => {
                 const dynamicRow = document.createElement('tr');
