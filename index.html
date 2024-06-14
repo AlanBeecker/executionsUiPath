@@ -142,7 +142,7 @@
             showExecutions(executionKey, botName, clientId, userKey, endPointOrquest)
         });
 
-        async function showExecutions(executionKey, botName, clientId, userKey) {
+        async function showExecutions(executionKey, botName, clientId, userKey, endPointOrquest) {
             const executions = await getExecutionsFormated(executionKey, botName, clientId, userKey);
             const table = document.getElementById('tablaDatos');
             const tbody = table.querySelector('tbody');
