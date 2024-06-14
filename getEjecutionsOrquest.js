@@ -11,26 +11,25 @@ async function getToken(clientId,userKey) {
         body: JSON.stringify(credentials)
     };
 
-    const response = await fetch('https://account.uipath.com/oauth/token', options);
+    const response = await fetch('https://useorquestuipath.onrender.com/api/token', options);
     const responseData = await response.json();
-    //console.log(responseData.access_token);
+    console.log(responseData.access_token);
     return responseData.access_token;
 };
 
 async function getExecutions(botName,clientId,userKey) {
+    const body = {
+        botName: botName,
+        token : await getToken(clientId,userKey)
+    }
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${await getToken(clientId,userKey)}`
-        }
+        },
+        body: JSON.stringify(body)
     };
-    const endPoint = botName ? 
-    `https://cloud.uipath.com/brookrpfaldp/Prod/orchestrator_/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc&$filter=ReleaseName eq '${botName}'` :
-    'https://cloud.uipath.com/brookrpfaldp/Prod/orchestrator_/odata/Jobs?$select=ReleaseName,EndTime,StartTime,key&$orderby=StartTime%20desc'
-    console.log(endPoint);
-    const response = await fetch(endPoint, options);
-    //console.log(await response.json());
+    const response = await fetch('https://useorquestuipath.onrender.com/api/executions', options);
     return await response.json();
 }
 
