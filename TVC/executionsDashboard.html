@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Fechas y Horas</title>
+  <style>
+    body {
+      font-family: 'Verdana', 'Geneva', sans-serif;
+      font-size: 13px;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 20px 0;
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: calc(100% - 16px);
+      padding: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 1000px;
+      background-color: #fff;
+      margin: 20px 0;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: right;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f8f8f8;
+      text-align: center;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="formData">
+    <label for="executionStart">Id execición inicio:</label>
+    <input type="number" id="executionStart" name="executionStart" required>
+    <br>
+    <label for="executionEnd">Id execición fin:</label>
+    <input type="number" id="executionEnd" name="executionEnd" required>
+    <br>
+    <button type="submit">Enviar</button>
+  </form>
+  <table id="infoTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Case ID</th>
+        <th>Sender Email</th>
+        <th>Case title</th>
+        <th>Case description</th>
+        <th>Category</th>
+        <th>Subcategory</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dynamics Rows -->
+    </tbody>
+  </table>
+</body>
+
+</html>
+<script src="getExecutions.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    //main();
+    const form = document.getElementById('formData');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const executionStart = document.getElementById('executionStart').value;
+      const executionEnd = document.getElementById('executionEnd').value;
+
+      showExecutions(executionStart, executionEnd)
+    });
+
+    async function showExecutions(executionStart, executionEnd) {
+      const data = await getExecutionsFormated(executionStart, executionEnd);
+
+      console.log('consult finished');
+
+      const table = document.getElementById('infoTable');
+      const tbody = table.querySelector('tbody');
+
+      data.forEach(transaction => {
+        const row = document.createElement('tr');
+        const cellDate = document.createElement('td');
+        const cellStart = document.createElement('td');
+        const cellEnd = document.createElement('td');
+        const cellCaseId = document.createElement('td');
+        const cellSenderEmail = document.createElement('td');
+        const cellCaseTitle = document.createElement('td');
+        const cellCaseDescription = document.createElement('td');
+        const cellCategory = document.createElement('td');
+        const cellSubcategory = document.createElement('td');
+        const cellStatus = document.createElement('td');
+
+        cellDate.textContent = transaction.date;
+        cellStart.textContent = transaction.startRun;
+        cellEnd.textContent = transaction.endRun;
+        cellCaseId.textContent = transaction.caseId;
+        cellSenderEmail.textContent = transaction.senderEmail;
+        cellCaseTitle.textContent = transaction.caseTitle;
+        cellCaseDescription.textContent = transaction.caseDescription;
+        cellCategory.textContent = transaction.category;
+        cellSubcategory.textContent = transaction.subcategory;
+        cellStatus.textContent = transaction.status;
+
+        row.appendChild(cellDate);
+        row.appendChild(cellStart);
+        row.appendChild(cellEnd);
+        row.appendChild(cellCaseId);
+        row.appendChild(cellSenderEmail);
+        row.appendChild(cellCaseTitle);
+        row.appendChild(cellCaseDescription);
+        row.appendChild(cellCategory);
+        row.appendChild(cellSubcategory);
+        row.appendChild(cellStatus);
+        tbody.appendChild(row);
+      });
+    }
+  });
+</script>
