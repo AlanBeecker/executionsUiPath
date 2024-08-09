@@ -114,12 +114,12 @@
     <table id="tablaDatos">
         <thead>
             <tr>
-                <th>Bot</th>
-                <th>-</th>
+                <!-- <th>Bot</th>
+                <th>-</th>-->
                 <th>Date</th>
                 <th>Start run</th>
                 <th>End run</th>
-                <th>Total time</th>
+                <!-- <th>Total time</th>-->
             </tr>
         </thead>
         <tbody>
@@ -165,12 +165,12 @@
                 end.textContent = execution.endRun;
                 total.textContent = execution.totalTime
 
-                dynamicRow.appendChild(bot);
-                dynamicRow.appendChild(space)
+                //dynamicRow.appendChild(bot);
+                //dynamicRow.appendChild(space)
                 dynamicRow.appendChild(dateRow);
                 dynamicRow.appendChild(start);
                 dynamicRow.appendChild(end);
-                dynamicRow.appendChild(total)
+                //dynamicRow.appendChild(total)
                 tbody.appendChild(dynamicRow);
             });
         }
